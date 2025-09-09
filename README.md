@@ -21,7 +21,7 @@ Special thank you to the [Lenfest Institute AI Collaborative and Fellowship Prog
 
 1. Clone the repository
 ```bash
-git clone ...
+git clone https://github.com/phillymedia/dewey-ai.git
 cd dewey
 ```
 
