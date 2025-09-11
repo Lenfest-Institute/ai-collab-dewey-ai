@@ -22,7 +22,7 @@ Special thank you to the [Lenfest Institute AI Collaborative and Fellowship Prog
 1. Clone the repository
 ```bash
 git clone https://github.com/phillymedia/dewey-ai.git
-cd dewey
+cd dewey-ai
 ```
 
 2. Create virtual environment
