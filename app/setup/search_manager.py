@@ -102,14 +102,12 @@ class SearchManager:
                         name="url",
                         type="Edm.String",
                     ),
-                    SearchableField(
+                    SimpleField(
                         name="authors",
                         type="Collection(Edm.String)",
                         filterable=True,
-                        sortable=True,
                         facetable=True,
                         retrievable=True,
-                        analyzer_name="standard.lucene",
                     ),
                     SimpleField(
                         name="publish_date",

@@ -14,15 +14,14 @@ class TipFormatter:
             date_text = f"⏳ Until {end_date}"
 
         author_text = ""
+        author_names = [author['name'] for author in metadata['authors']]
         if len(metadata["authors"]) == 1:
-            author_text = f"🖊️ Written by {metadata['authors'][0]}"
+            author_text = f"🖊️ Written by {author_names[0]}"
         elif len(metadata['authors']) > 1:
-            author_text = f"🖊️ Written by {', '.join(metadata['authors'][:-1])}, and {metadata['authors'][-1]}"
+            author_text = f"🖊️ Written by {', '.join(author_names[:-1])}{',' if len(author_names) > 2 else ''} and {author_names[-1]}"
 
         text_blocks = filter(lambda x: len(x) > 0, [search_text, date_text, author_text])
         return "\n".join(text_blocks)
     
     def tip_search(sources: list):
         return f"🔍 Retrieved {len(sources)} articles."
-
-        

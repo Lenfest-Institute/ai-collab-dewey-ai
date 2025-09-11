@@ -84,6 +84,29 @@ class Dewey:
 
         return json.loads(response.output[-1].arguments)
     
+    def build_filter(self, metadata):
+        filters = []
+
+        # Date range filter
+        if metadata["date_range"]["start_date"]:
+            filters.append(f"publish_date ge {metadata['date_range']['start_date']}T00:00:00Z")
+
+        if metadata["date_range"]["end_date"]:
+            filters.append(f"publish_date le {metadata['date_range']['end_date']}T23:59:59Z")
+
+        # Authors filter
+        author_filters = []
+        author_names = [author['name'] for author in metadata["authors"]]
+        for author in author_names:
+            if author:
+                author_filters.append(f"a eq '{author}'")
+
+        author_filter_text = f"authors/any(a: {' or '.join(author_filters)})"
+        if author_filter_text:
+            filters.append(f"{author_filter_text}")
+
+        return None if len(filters) == 0 else " and ".join(filters)
+    
     def retrieve_articles(self, metadata):
         # Prepare vector query
         vectors: List[VectorQuery] = []
@@ -98,10 +121,13 @@ class Dewey:
         vectors.append(query_vector)
 
         # Build filter
+        filter = self.build_filter(metadata)
+        print(filter)
         
         # Perform search
         results = self.search_client.search(
             search_text=metadata["question"],
+            filter=filter,
             top=10,
             vector_queries=vectors,
             query_type=QueryType.SEMANTIC,
@@ -116,7 +142,7 @@ class Dewey:
             sources.append(json.dumps({
                 "url": page["url"],
                 "publish_date": f"{parse(page['publish_date']).date().isoformat()}",
-                "authors": json.loads(page["authors"]),
+                "authors": page["authors"],
                 "headline": page["headline"],
                 "content":  page["content"].replace("\n", " ").replace("\r", " ")
             }))
