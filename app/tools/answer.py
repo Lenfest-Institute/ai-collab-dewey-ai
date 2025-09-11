@@ -18,7 +18,6 @@ def load_answer_prompt(current_date: str) -> str:
         - IF the retrieved articles are NOT relevant, THEN tell the journalist you could not answer their question and to reword or rephrase their question
         - IF you cannot answer the journalist, you MUST tell them instead of guessing
         - You should always present information chronologically
-        - You may assume the journalist is asking about Philadelphia unless stated otherwise
 
         ## Citations Rules
         1. Each source is specified by a source ID (e.g., [SRC1]), publish date, and article text.
