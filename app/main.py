@@ -9,7 +9,6 @@ import json
 load_dotenv()
 
 
-
 oai_config = AzureOpenAIConfig(
     endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_key=os.environ["AZURE_OPENAI_API_KEY"],
